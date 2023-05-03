@@ -78,7 +78,9 @@ const translations = {
         'do-get-crypto-list': 'Getting crypto list...',
         'do-get-crypto-detail': 'Getting crypto detail...',
         'next-refresh': 'Next refresh',
-        'current-price': 'Current price'
+        'current-price': 'Current price',
+        'min-24-change' : 'Minimum 24-hr % Change',
+        'rank': 'Rank'
     },
     es: { 
         'welcome': '¡Bienvenido!', 
@@ -159,7 +161,9 @@ const translations = {
         'do-get-crypto-list': 'Obteniendo lista de criptos...',
         'do-get-crypto-detail': 'Obteniendo detalle de cripto...',
         'next-refresh': 'Próxima consulta',
-        'current-price': 'Precio actual'
+        'current-price': 'Precio actual',
+        'min-24-change' : 'Porc. Min Cambio 24h',
+        'rank': 'Rank'
     },
 };
 

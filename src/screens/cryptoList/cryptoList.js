@@ -39,13 +39,17 @@ export default function CryptoList({ navigation }) {
                         key={i}
                         icon={'caret-forward'}
                         text={
-                            list[i].rank 
-                            + ' - ' 
-                            + list[i].name
-                            + ' ('
-                            + list[i].symbol
-                            + ') '
-                            + list[i].percent_change_24h
+                            <Text>
+                                {list[i].symbol} - {list[i].name}
+                                {"\n"}
+                                <Text fontSize={'2xs'} style={{lineHeight:15, paddingLeft:10}}>
+                                    {global.i18n.t('rank')}: {list[i].rank}
+                                </Text>
+                                {"\n"}
+                                <Text fontSize={'2xs'} style={{lineHeight:15, paddingLeft:10}}>
+                                    {global.i18n.t('min-24-change')}: {list[i].percent_change_24h}
+                                </Text>
+                            </Text>
                         }
                         onPress={() => selectCrypto(list[i].id)} />
                 );
@@ -114,7 +118,7 @@ export default function CryptoList({ navigation }) {
                         <SFInput
                             type="text"
                             icon="search"
-                            placeholder={'Minimum 24-hr % Change'}
+                            placeholder={global.i18n.t('min-24-change')}
                             value={minChange}
                             onChangeText={(val) => { setMinChange(val); doFilter(val); }} />
                     </Box>

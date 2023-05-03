@@ -82,17 +82,25 @@ export default function CryptoChart({ navigation }) {
     //On crypto change
     useEffect(() => {
         if (global.selectedCrypto != null) {
-            //First call
-            doGetCryptoDetail();
-            //Reset count timer
-            countTimer = parseInt(CHART_TIMEOUT / 1000);
+            //Allow only if there is internet access
+            if (global.networkInfo != null 
+                && global.networkInfo.isInternetReachable == true) {
+                    //First call
+                    doGetCryptoDetail();
+                    //Reset count timer
+                    countTimer = parseInt(CHART_TIMEOUT / 1000);
+            }
 
             //Set interval
             chartTimer = setInterval(() => {
-                //Do call
-                doGetCryptoDetail();
-                //Reset count timer
-                countTimer = parseInt(CHART_TIMEOUT / 1000);
+                //Allow only if there is internet access
+                if (global.networkInfo != null 
+                    && global.networkInfo.isInternetReachable == true) {
+                        //Do call
+                        doGetCryptoDetail();
+                        //Reset count timer
+                        countTimer = parseInt(CHART_TIMEOUT / 1000);
+                }
             }, CHART_TIMEOUT);
         }
     }, [global.selectedCrypto]);
@@ -101,7 +109,7 @@ export default function CryptoChart({ navigation }) {
         <ScreenContainer
             userMenu
             backButton
-            title={crypto != null ? crypto.name + ' (' + crypto.symbol + ')' : ''}
+            title={crypto != null ? crypto.symbol + ' - ' + crypto.name : ''}
             navigation={navigation}
             content={
                 <Box w={'95%'} alignSelf="center">
@@ -144,7 +152,7 @@ export default function CryptoChart({ navigation }) {
                     </Box>
 
                     {data.length < CHART_CALLS &&
-                        <Text style={{marginTop:20, textAlign:'right', paddingRight:5, fontSize:10}}>
+                        <Text style={{marginTop:20, textAlign:'right', paddingRight:5}} fontSize={'xs'}>
                             {global.i18n.t('next-refresh')}: {nextRefresh} {String(global.i18n.t('seconds')).toLowerCase()}
                         </Text>
                     }
