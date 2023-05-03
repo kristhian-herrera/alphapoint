@@ -1,0 +1,46 @@
+{
+  "expo": {
+    "name": "Alpha Point",
+    "slug": "alpha-point",
+    "version": "0.0.1",
+    "icon": "./assets/ap-icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/ap-splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFFFFF"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "requireFullScreen": true,
+      "supportsTablet": true,
+      "bundleIdentifier": "com.alphapoint.alphapoint",
+      "buildNumber": "0.0.1"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/ap-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "package": "com.alphapoint.alphapoint",
+      "permissions": []
+    },
+    "web": {
+      "favicon": "./assets/ap-icon.png"
+    },
+    "plugins": [
+      [
+        "expo-screen-orientation",
+        {
+          "initialOrientation": "DEFAULT"
+        }
+      ]
+    ],
+    "description": "Alpha Point"
+  }
+}
