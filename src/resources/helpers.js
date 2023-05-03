@@ -218,23 +218,6 @@ const serviceError = (global, error, navigation, toast) => {
     showMessage(toast, "error", vErrorTitle, vErrorMessage);
 }
 
-const securedEndpointError = async (global, error, errorCode, loginServices) => {
-    //Not authorized error
-    if (validateNotAuthorized(error)) {
-        //Do logout
-        await loginServices.logout(global);
-
-        //Log
-        //console.log(errorMessage(global, error));
-        
-        //Return session expired error
-        return new Error(global.i18n.t('session-expired'));
-    }
-
-    //Return error
-    return new Error(errorMessage(error) + '||' + errorCode);
-} 
-
 /* GENERAL */
 const sortAscArrayByKey = (array, key) => {
     return array.sort(function(a, b) {
@@ -310,9 +293,6 @@ const helpers = {
     },
     serviceError: function(global, error, navigation, toast) {
         return serviceError(global, error, navigation, toast);
-    },
-    securedEndpointError: async function(global, error, errorCode, loginServices) {
-        return await securedEndpointError(global, error, errorCode, loginServices);
     },
 
     /* GENERAL */

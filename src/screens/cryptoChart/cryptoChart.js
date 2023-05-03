@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Text, Box } from 'native-base';
+import { Text, Box, useToast } from 'native-base';
 import { LineChart, Grid, YAxis, XAxis } from 'react-native-svg-charts';
 
 import GlobalContext from '../../components/globalContext/globalContext';
@@ -15,13 +15,15 @@ import {
 
 export default function CryptoChart({ navigation }) {
     const global = useContext(GlobalContext);
+    const toast = useToast();
 
     const [crypto, setCrypto] = useState(null);
     const [data, setData] = useState([]);
     const [timeData, setTimeData] = useState([]);
-    const [nextRefresh, setNextRefresh] = useState(CHART_TIMEOUT / 1000);
+    const [nextRefresh, setNextRefresh] = useState(0);
     let chartTimer = 0;
     let resetTimer = 0;
+    let countTimer = parseInt(CHART_TIMEOUT / 1000);
 
     //Get crypto detail
     const doGetCryptoDetail = async () => {
@@ -47,9 +49,9 @@ export default function CryptoChart({ navigation }) {
             vTimeData.push(helpers.formatTime(new Date()));
             setTimeData(vTimeData);
 
-            //Clear interval
+            //Clear intervals
             if (data.length > CHART_CALLS) {
-                clearInterval(chartTimer);
+                destroyTimers();
             }
 
             //Hide loading
@@ -60,34 +62,37 @@ export default function CryptoChart({ navigation }) {
         }
     }
 
-    //Reset timer
-    const resetCallTimer = () => {
-        //Reset next refresh
-        setNextRefresh(CHART_TIMEOUT / 1000);
-
-        //Clear
+    //Destroy timers
+    const destroyTimers = () => {
         clearInterval(resetTimer);
-
-        //Reset timer
-        /*
-        resetTimer = setInterval(() => {
-            setNextRefresh(nextRefresh - 1);
-        }, 1000);
-        */
+        clearInterval(chartTimer);
     }
+
+    //Timer
+    useEffect(() => {
+        resetTimer = setInterval(() => {
+            setNextRefresh(countTimer--);
+        }, 1000);
+    
+        return () => {
+            destroyTimers();
+        }
+    }, []);
 
     //On crypto change
     useEffect(() => {
         if (global.selectedCrypto != null) {
             //First call
             doGetCryptoDetail();
-            resetCallTimer();
+            //Reset count timer
+            countTimer = parseInt(CHART_TIMEOUT / 1000);
 
             //Set interval
             chartTimer = setInterval(() => {
                 //Do call
                 doGetCryptoDetail();
-                resetCallTimer();
+                //Reset count timer
+                countTimer = parseInt(CHART_TIMEOUT / 1000);
             }, CHART_TIMEOUT);
         }
     }, [global.selectedCrypto]);
@@ -138,10 +143,12 @@ export default function CryptoChart({ navigation }) {
                         </Box>
                     </Box>
 
-                    <Text style={{marginTop:20}}>
-                        {global.i18n.t('next-refresh')}: {nextRefresh} {global.i18n.t('seconds')}
-                    </Text>
-                
+                    {data.length < CHART_CALLS &&
+                        <Text style={{marginTop:20, textAlign:'right', paddingRight:5, fontSize:10}}>
+                            {global.i18n.t('next-refresh')}: {nextRefresh} {String(global.i18n.t('seconds')).toLowerCase()}
+                        </Text>
+                    }
+
                 </Box>
             } />
     );
