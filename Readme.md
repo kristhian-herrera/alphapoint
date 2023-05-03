@@ -1,9 +1,5 @@
-# NativeBase Expo Template
+# Alpha Point React Native Test
 
-The official NativeBase template for [Expo](https://docs.expo.io/)
 
-## Usage
-
-```sh
-expo init my-app --template @native-base/expo-template
-```
+## Kristhian Herrera
+## May, 2023
