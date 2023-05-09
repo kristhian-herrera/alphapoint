@@ -9,8 +9,8 @@ export const DEFAULT_EXPIRATION_SESSION_MINUTES = '15';
 
 export const ERROR_COLOR = '#EF4444';
 
-export const CHART_TIMEOUT = 5000;
-export const CHART_CALLS = 5
+export const CHART_TIMEOUT = 30000;
+export const CHART_CALLS = 5;
 
 //ENDPOINTS
 export const ENDPOINT_TIMEOUT = 15000;

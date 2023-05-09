@@ -41,7 +41,7 @@ export default function CryptoChart({ navigation }) {
 
             //Set data
             let vData = data;
-            vData.push(response[0].price_usd * Math.random());
+            vData.push(response[0].price_usd);
             setData(vData);
 
             //Set time data
